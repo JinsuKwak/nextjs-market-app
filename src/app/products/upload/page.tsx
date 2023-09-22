@@ -12,8 +12,11 @@ import { categories } from "@/components/categories/Categories";
 import Categoryinput from "@/components/categories/Categoryinput";
 import GoogleMapContainer from "@/components/GoogleMapContainer";
 import dynamic from "next/dynamic";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ProductUploadPage = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -40,11 +43,24 @@ const ProductUploadPage = () => {
   const latitude = watch("latitude");
   const longitude = watch("longitude");
 
-  const GoogleMap = dynamic(() => import("../../../components/GoogleMapContainer"), {
+  const GoogleMapContainer = dynamic(() => import("../../../components/GoogleMapContainer"), {
     ssr: false,
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {};
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+    axios
+      .post("/api/products", data)
+      .then((res) => {
+        router.push(`/products/${res.data.id}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value);
   };
