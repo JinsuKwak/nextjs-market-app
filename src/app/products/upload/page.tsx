@@ -10,6 +10,8 @@ import Heading from "@/components/Heading";
 import ImageUpload from "@/components/ImageUpload";
 import { categories } from "@/components/categories/Categories";
 import Categoryinput from "@/components/categories/Categoryinput";
+import GoogleMapContainer from "@/components/GoogleMapContainer";
+import dynamic from "next/dynamic";
 
 const ProductUploadPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +37,12 @@ const ProductUploadPage = () => {
 
   const imageSrc = watch("imageSrc");
   const category = watch("category");
+  const latitude = watch("latitude");
+  const longitude = watch("longitude");
+
+  const GoogleMap = dynamic(() => import("../../../components/GoogleMapContainer"), {
+    ssr: false,
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   const setCustomValue = (id: string, value: any) => {
@@ -83,7 +91,7 @@ const ProductUploadPage = () => {
             ))}
           </div>
           <hr />
-          {/* {map} */}
+          <GoogleMapContainer setCustomValue={setCustomValue} latitude={latitude} longitude={longitude} />
           <Button label="Add Product" />
         </form>
       </div>

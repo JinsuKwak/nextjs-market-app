@@ -18,6 +18,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.className}>
         <Navbar currentUser={currentUser} />
         {children}
+        {/* <script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}&libraries=places`}
+          async
+        /> */}
       </body>
     </html>
   );
