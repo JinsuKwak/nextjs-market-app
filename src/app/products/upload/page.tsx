@@ -8,6 +8,8 @@ import Container from "@/components/Container";
 import { SubmitHandler } from "react-hook-form";
 import Heading from "@/components/Heading";
 import ImageUpload from "@/components/ImageUpload";
+import { categories } from "@/components/categories/Categories";
+import Categoryinput from "@/components/categories/Categoryinput";
 
 const ProductUploadPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +34,8 @@ const ProductUploadPage = () => {
   });
 
   const imageSrc = watch("imageSrc");
+  const category = watch("category");
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value);
@@ -65,10 +69,22 @@ const ProductUploadPage = () => {
           />
           <hr />
 
-          <div className="grid gird-cols-1 md:grid-cols-2 gap-3 max-h-[5-vh] overflow-y-auto"></div>
+          <div className="grid gird-cols-1 md:grid-cols-2 gap-3 max-h-[5-vh] overflow-y-auto">
+            {categories.map((item) => (
+              <div key={item.label} className="col-span-1">
+                <Categoryinput
+                  onClick={(category) => setCustomValue("category", category)}
+                  selected={category === item.path}
+                  label={item.label}
+                  icon={item.icon}
+                  path={item.path}
+                />
+              </div>
+            ))}
+          </div>
           <hr />
           {/* {map} */}
-          <Button label="Create Item" />
+          <Button label="Add Product" />
         </form>
       </div>
     </Container>
