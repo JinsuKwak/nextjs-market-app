@@ -5,7 +5,7 @@ import getCurrentUser from "../actions/getCurrentUser";
 
 const UserPage = async () => {
   const data = await getCurrentUser();
-  console.log("SERVER SESSION (USERDATA)", data);
+  // console.log("SERVER SESSION (USERDATA)", data);
 
   return <div>UserPage</div>;
 };
